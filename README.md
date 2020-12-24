@@ -9,4 +9,4 @@ Tek uygulama kullanarak hem şirket yetkilisi hem de diğer personeller, kullan�
 - Tanımlanmış olan personel, yetkili kişi tarafından onaylanmadığı sürece programa giriş yapamaz, onay bekler.
 - Onaylanmış olan kullanıcılar, şirket kodu, email adresi ve şifresini girerek programı kullanmaya başlar.
 - Cihazın GPS alıcısı kapalı olduğunda yetkili kişilere uyarı gider.
-- Uygulama zaman bilgisini GRP uydusundan aldığından, cihazın tarih veya saatiyle oynanması, veri doğruluğunu etkilemeyecektir.
+- Uygulama, zaman bilgisini GRP uydusundan aldığından, cihazın tarih veya saatiyle oynanması, veri doğruluğunu etkilemez.
