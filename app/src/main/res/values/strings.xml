@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Personel Takip</string>
+    <string name="sirketKodu">Şirket Kodu</string>
+    <string name="email">E-Posta</string>
+    <string name="password">Şifre</string>
+    <string name="login">GİRİŞ</string>
+    <string name="newUser">Yeni Kullanıcı</string>
+    <string name="forgotPassword">Şifremi Unuttum</string>
+    <string name="rememberMe">Beni Hatırla</string>
+    <string name="autoLogin">Otomatik Giriş Yap</string>
+</resources>
