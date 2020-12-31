@@ -1,18 +1,22 @@
 package com.example.personeltakip;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.math.BigInteger;
-import java.net.SocketTimeoutException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Tools {
+    public Boolean isLoggedIn;
+
+    public static class PersonelData {
+        public static String CitizenNumber;
+        public static String Name;
+        public static String Surname;
+        public static String FirmCode;
+        public static String FirmTitle;
+        public static String FirmCity;
+    }
+
+
     public boolean TCConfirm(String kimlikNo) {
         if (kimlikNo.length() != 11) return false;
         if (kimlikNo.substring(0, 1).equals("0")) return false;
@@ -41,4 +45,26 @@ public class Tools {
         String hash = new BigInteger(1, m.digest()).toString(16);
         return hash;
     }
+
+    public String RightStr(String _string, int _CharCount) {
+        try {
+            int _len = _string.length();
+            return _string.substring(_len - _CharCount, _len);
+        } catch (Exception err) {
+            return _string;
+        }
+    }
+
+    public boolean isInternetAvailable() {
+        boolean _result = false;
+        try {
+            String command = "ping -c 1 google.com";
+            _result = Runtime.getRuntime().exec(command).waitFor() == 0;
+        } finally {
+            return _result;
+        }
+    }
+
+
 }
+

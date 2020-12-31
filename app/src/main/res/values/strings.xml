@@ -7,4 +7,25 @@
     <string name="forgotPassword">Şifremi Unuttum</string>
     <string name="rememberMe">Beni Hatırla</string>
     <string name="autoLogin">Otomatik Giriş Yap</string>
+    <string name="resetPasswordMessage">Şifrenizin sıfırlanması için lütfen yöneticinize başvurun.</string>
+    <string name="information">BİLGİ</string>
+    <string name="ok">TAMAM</string>
+    <string name="yes">EVET</string>
+    <string name="no">HAYIR</string>
+    <string name="errorCitizenNumber">Kimlik numarası hatalıdır.</string>
+    <string name="wrongPassword">Lütfen en az 4 karekterli bir şifre girin.</string>
+    <string name="wrongFirmCode">Firma kodu hatalıdır.</string>
+    <string name="pleaseWait">Lütfen bekleyin...</string>
+    <string name="unkonwnError">Tanımlanamayan bir hata meydana geldi. Lütfen yöneticinizle görüşün.</string>
+    <string name="loggedIn">Giriş işlemi başarıyla tamamlanmıştır!</string>
+    <string name="notLoggedIn">Giriş işlemi başarısız olmuştur. Lütfen bilgilerinizi kontrol edip tekrar deneyin!</string>
+    <string name="multiplyUserError">Çoklu kullanıcı hatası!</string>
+    <string name="noPassword">Şimdiye kadar bir şifre tanımlanmamış. Şifre tanımlama işleminin yapılmasını istiyor musunuz?\nKabul etmeniz durumunda arkada girilmiş olan şifre sizin şifreniz olarak tanımlanacaktır.</string>
+    <string name="passwordDefined">Şifre belirleme işlemi başarıyla tamamlanmıştır!</string>
+    <string name="passwordDefineError">Şifre belirleme işlemi sırasında hata oluştu. Lütfen yöneticinizle görüşün.</string>
+    <string name="error">HATA!</string>
+    <string name="confirmation">ONAY!</string>
+    <string name="passwordCaution">ŞİFRENİZİ UNUTMANIZ DURUMUNDA GİRİŞ YAPAMAYACAKSINIZ.\n\nŞifre belirleme işlemine devam etmek istiyor musunuz?</string>
+    <string name="permissionErrorMessage">Lütfen gerekli izinleri verin.</string>
+    <string name="internetUnavailable">İnternet bağlantısı bulunamadı. Lütfen bağlantınızı kontrol edin.</string>
 </resources>

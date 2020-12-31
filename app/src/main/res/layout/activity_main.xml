@@ -1,79 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="30dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-
-    <EditText
-        android:id="@+id/txtFirmCode"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/firmCode"
-        android:inputType="numberDecimal"
-        android:maxLength="6"
-        android:text="200001"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/txtCitizenshipNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/citizenshipNumber"
-        android:inputType="numberDecimal"
-        android:maxLength="11"
-        android:text="68368238442"
-        android:textAlignment="center"
-        android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/txtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:maxLength="20"
-        android:text="1111aaaa"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        <ImageView
+            android:id="@+id/imgPlaylistItemBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tvForgetPassword"
+            android:layout_margin="20dp"
+            android:adjustViewBounds="true"
+            android:alpha=".35"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fore" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <RadioButton
-            android:id="@+id/rbRememberMe"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/etFirmCode"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/rememberMe" />
+            android:hint="@string/firmCode"
+            android:inputType="number"
+            android:maxLength="6"
+            android:text="200002"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
-        <RadioButton
-            android:id="@+id/rbAutoLogin"
+        <EditText
+            android:id="@+id/etCitizenshipNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etFirmCode"
+            android:hint="@string/citizenshipNumber"
+            android:inputType="number"
+            android:maxLength="11"
+            android:text="68368238442"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etCitizenshipNumber"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:text="1111aaaa"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etPassword"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/rbRememberMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/rememberMe" />
+
+            <RadioButton
+                android:id="@+id/rbAutoLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/autoLogin" />
 
-    </RadioGroup>
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="@string/login"
-        android:textSize="30sp" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/etPassword"
+            android:text="@string/login"
+            android:textSize="30sp" />
 
-
-    <TextView
-        android:id="@+id/txtForgetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/forgotPassword"
-        android:textSize="20sp" />
-
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvForgetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnLogin"
+            android:text="@string/forgotPassword"
+            android:textSize="20sp" />
+    </RelativeLayout>
+</ScrollView>
