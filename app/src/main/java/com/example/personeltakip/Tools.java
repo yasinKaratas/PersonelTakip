@@ -1,12 +1,15 @@
 package com.example.personeltakip;
 
+import android.location.Location;
+
+import com.huawei.hms.location.LocationResult;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Tools {
     public Boolean isLoggedIn;
-
     public static class PersonelData {
         public static String CitizenNumber;
         public static String Name;

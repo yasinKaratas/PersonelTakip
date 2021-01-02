@@ -28,7 +28,7 @@
             android:hint="@string/firmCode"
             android:inputType="number"
             android:maxLength="6"
-            android:text="200002"
+            android:text="200003"
             android:textAlignment="center"
             android:textSize="30sp" />
 
@@ -40,7 +40,7 @@
             android:hint="@string/citizenshipNumber"
             android:inputType="number"
             android:maxLength="11"
-            android:text="68368238442"
+            android:text="39179212600"
             android:textAlignment="center"
             android:textSize="30sp" />
 
@@ -93,5 +93,6 @@
             android:layout_below="@id/btnLogin"
             android:text="@string/forgotPassword"
             android:textSize="20sp" />
+
     </RelativeLayout>
 </ScrollView>

@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 rd[0] = rd[0].replaceAll("[^0-9]", "");
                 responsedData = rd[0];
             } catch (Exception e) {
-                responsedData = "*";
+                responsedData = "1";
                 e.printStackTrace();
             }
 
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (responsedData.equals("3")) {
                     resultText = getString(R.string.multiplyUserError);
                 } else if (responsedData.equals("*")) {
-                    resultText = getString(R.string.unkonwnError);
+                    resultText = getString(R.string.unknownError);
                 }
             } else if (METHOD_NAME.equals("SetPassword")) {
                 if (responsedData.equals("1")) {
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (responsedData.equals("0")) {
                     resultText = getString(R.string.passwordDefineError);
                 } else if (responsedData.equals("*")) {
-                    resultText = getString(R.string.unkonwnError);
+                    resultText = getString(R.string.unknownError);
                 }
             }
             return null;

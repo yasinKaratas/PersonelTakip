@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Personel Follow</string>
+    <string name="app_name">Personel Takip</string>
     <string name="firmCode">Firm Code</string>
     <string name="citizenshipNumber">Citizen Number</string>
     <string name="password">Password</string>
@@ -16,7 +16,7 @@
     <string name="pleaseWait">Please wait...</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
-    <string name="unkonwnError">Unknown error. Please contanct your admin.</string>
+    <string name="unknownError">Unknown error. Please contanct your admin.</string>
     <string name="loggedIn">Login successfully.</string>
     <string name="notLoggedIn">Login unsuccessfully. Check the parameters.</string>
     <string name="multiplyUserError">Multiply user error!</string>
