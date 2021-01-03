@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLogin.setOnClickListener(this);
         tvForgetPassword.setOnClickListener(this);
+    }
+
+    public void applyPermission() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                String[] strings =
+                        {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+                ActivityCompat.requestPermissions(this, strings, 1);
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION") != PackageManager.PERMISSION_GRANTED) {
+                String[] strings = {android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                        "android.permission.ACCESS_BACKGROUND_LOCATION"};
+                ActivityCompat.requestPermissions(this, strings, 2);
+            }
+        }
     }
 
     boolean CheckPermissions() {
@@ -249,7 +275,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     .setCancelable(true)
                                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            CheckPermissions();
+                                            //CheckPermissions();
+                                            applyPermission();
                                         }
                                     }).create();
                             alert.show();
