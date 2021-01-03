@@ -41,6 +41,7 @@ public class GetLastLocation extends Service {
 
     public static Context context;
     public static int delay = 3000;
+
     final String NAMESPACE = "http://www.yasinkaratas.com.tr/";
     final String URL = "http://www.yasinkaratas.com.tr/WebServices/PersonelTakip.asmx";
     String METHOD_NAME = "SaveLocation";

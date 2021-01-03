@@ -28,4 +28,5 @@
     <string name="passwordCaution">ŞİFRENİZİ UNUTMANIZ DURUMUNDA GİRİŞ YAPAMAYACAKSINIZ.\n\nŞifre belirleme işlemine devam etmek istiyor musunuz?</string>
     <string name="permissionErrorMessage">Lütfen gerekli izinleri verin.</string>
     <string name="internetUnavailable">İnternet bağlantısı bulunamadı. Lütfen bağlantınızı kontrol edin.</string>
+    <string name="showRoute">Rotayı Göster</string>
 </resources>

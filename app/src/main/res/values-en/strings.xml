@@ -28,4 +28,5 @@
     <string name="passwordCaution">IF YOU FORGET YOUR PASSWORD, YOU CANNOT LOGIN\\nDo you want to continue with the password setting process?</string>
     <string name="permissionErrorMessage">Please give the necessary permissions.</string>
     <string name="internetUnavailable">No internet connection. Please check the connection settings.</string>
+    <string name="showRoute">Show Route</string>
 </resources>
