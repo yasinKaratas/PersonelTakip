@@ -10,15 +10,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class Tools {
     public Boolean isLoggedIn;
-    public static class PersonelData {
-        public static String CitizenNumber;
-        public static String Name;
-        public static String Surname;
-        public static String FirmCode;
-        public static String FirmTitle;
-        public static String FirmCity;
-    }
-
 
     public boolean TCConfirm(String kimlikNo) {
         if (kimlikNo.length() != 11) return false;

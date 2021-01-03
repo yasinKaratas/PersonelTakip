@@ -1,76 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:adjustViewBounds="true"
-            android:alpha=".35"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fore" />
-
-        <TextView
-            android:id="@+id/tvFirmCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvFirmTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvFirmCode"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="50sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvFirmCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvFirmTitle"
             android:textAlignment="center"
-            android:textSize="30sp" />
-
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvNameSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvFirmCity"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvCitizenNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvNameSurname"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="16sp" />
 
         <com.huawei.hms.maps.MapView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/mapView"
-            android:layout_width="500dp"
-            android:layout_height="300dp"
-            android:layout_below="@id/tvCitizenNumber"
-            map:cameraTargetLat="40.64445071288113"
-            map:cameraTargetLng="29.264300941046443"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            map:cameraTargetLat="40.64"
+            map:cameraTargetLng="29.26"
             map:cameraZoom="7"
             map:mapType="normal"
             map:uiZoomControls="true" />
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 rd[0] = rd[0].replaceAll("[^0-9]", "");
                 responsedData = rd[0];
             } catch (Exception e) {
-                responsedData = "1";
+                responsedData = "0";
                 e.printStackTrace();
             }
 
@@ -238,12 +238,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (METHOD_NAME.equals("Login")) {
                 switch (responsedData) {
                     case "1": {
-                        Tools.PersonelData.CitizenNumber = rd[1];
-                        Tools.PersonelData.Name = rd[2];
-                        Tools.PersonelData.Surname = rd[3];
-                        Tools.PersonelData.FirmCode = rd[4];
-                        Tools.PersonelData.FirmTitle = rd[5];
-                        Tools.PersonelData.FirmCity = rd[6];
+                        GetLastLocation.PersonelData.CitizenNumber = rd[1].trim();
+                        GetLastLocation.PersonelData.Name = rd[2].trim();
+                        GetLastLocation.PersonelData.Surname = rd[3].trim();
+                        GetLastLocation.PersonelData.FirmCode = rd[4].trim();
+                        GetLastLocation.PersonelData.FirmTitle = rd[5].trim();
+                        GetLastLocation.PersonelData.FirmCity = rd[6].trim();
+                        GetLastLocation.PersonelData.isAdmin = rd[7].trim().equals("1");
 
                         if (!CheckPermissions()) {
                             alert = builder.setMessage(R.string.permissionErrorMessage)
