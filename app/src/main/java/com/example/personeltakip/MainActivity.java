@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvForgetPassword.setOnClickListener(this);
     }
 
-    public void applyPermission() {
+    public void applyPermission()
+    {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
