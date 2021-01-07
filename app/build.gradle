@@ -30,7 +30,8 @@ dependencies {
     implementation 'com.huawei.hms:maps:5.0.5.301'
     implementation 'com.huawei.agconnect:agconnect-core:1.4.0.300'
     implementation 'com.huawei.hms:location:5.0.4.300'
-    implementation files('src\\main\\java\\ksoap2-android-2.5.2.jar')
+    implementation files('libs\\ksoap2-android-assembly-3.6.4-jar-with-dependencies.jar')
+
 }
 
 apply plugin: 'com.huawei.agconnect'

@@ -1,22 +1,16 @@
 package com.example.personeltakip;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.huawei.hms.maps.CameraUpdateFactory;
 import com.huawei.hms.maps.HuaweiMap;
@@ -36,15 +30,20 @@ import java.util.List;
 
 public class Following extends AppCompatActivity implements OnMapReadyCallback {
 
+    // Web Service parametreleri
     final String NAMESPACE = "http://www.yasinkaratas.com.tr/";
     final String URL = "http://www.yasinkaratas.com.tr/WebServices/PersonelTakip.asmx";
     String METHOD_NAME = "GetLocations";
-    String SOAP_ACTION = NAMESPACE + METHOD_NAME;// "http://www.yasinkaratas.com.tr/HelloWorld";
-    List<String> lastLocations;
+    String SOAP_ACTION = NAMESPACE + METHOD_NAME;
 
-    private static final String TAG = "MapViewDemoActivity";
+    final String TAG = "MapViewDemoActivity";
+    final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    List<String> lastLocations;  // Haritada gösterilecek olan son konumlar...
+    boolean isRunning = false;   // Asenkron fonksiyonun bitmeden tekrarlanmasını engellemek için...
+    boolean isMapReady = false;  // Harita hazır olmadan harita üzerinde işlem yapılmasını engellemek için...
+
     private HuaweiMap hMap;
-    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     double oldLatitude = 40.64;
     double oldLongitude = 29.23;
 
@@ -79,6 +78,7 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         MapsInitializer.setApiKey("CgB6e3x9Iw723tzF8QD9fwWo5XUkLjhgA4HXJcDquOdwHo025PBgikBFgdPx8EiAgiqix1XHyHEW/gzh7uOt83PS");
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
+
         init();
 
         //tvFirmCode.setText(Tools.PersonelData.FirmCode);
@@ -106,6 +106,7 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         hMap = huaweiMap;
         hMap.setMyLocationEnabled(true);
         hMap.getUiSettings().setMyLocationButtonEnabled(true);
+        isMapReady = true;
     }
 
     //private Handler mHandler = new Handler();
@@ -125,6 +126,8 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
     */
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
+            if (!isMapReady) return;
+            ;
             mHandler.postDelayed(this, GetLastLocation.delay);
 //            if ((oldLatitude == GetLastLocation.CurrentPosition.Latitude) && (oldLongitude == GetLastLocation.CurrentPosition.Longitude)) {
 //                return;
@@ -135,7 +138,7 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
 //                    + "\nTIME: " + GetLastLocation.CurrentPosition.DateTime + "\nSPEED: " + String.valueOf(GetLastLocation.CurrentPosition.Speed);
 //            Toast.makeText(Following.this, msg, Toast.LENGTH_LONG).show();
             if (GetLastLocation.PersonelData.isAdmin) {
-                new asynTask().execute();
+                if (!isRunning) new asynTask().execute();
                 hMap.clear();
                 for (int i = 0; i < lastLocations.size(); i++) {
                     String[] person = lastLocations.get(i).split("\\|");
@@ -169,6 +172,8 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
 
         @Override
         protected Void doInBackground(String... strings) {
+            if (isRunning) return null;
+            isRunning = true;
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("firmCode", GetLastLocation.PersonelData.FirmCode);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -233,6 +238,7 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
                     }
                 }
             }
+            isRunning = false;
         }
     }
 

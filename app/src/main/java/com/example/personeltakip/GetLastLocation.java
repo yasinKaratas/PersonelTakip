@@ -41,6 +41,7 @@ public class GetLastLocation extends Service {
 
     public static Context context;
     public static int delay = 3000;
+    boolean isRunning = false;
 
     final String NAMESPACE = "http://www.yasinkaratas.com.tr/";
     final String URL = "http://www.yasinkaratas.com.tr/WebServices/PersonelTakip.asmx";
@@ -82,8 +83,7 @@ public class GetLastLocation extends Service {
                     String msg = "\nLAT: " + CurrentPosition.Latitude + "\nLONG: " + CurrentPosition.Longitude
                             + "\nTIME: " + GetLastLocation.CurrentPosition.DateTime + "\nSPEED: " + String.valueOf(CurrentPosition.Speed);
                     Log.w("SPEEDY-1", msg);
-
-                    new asynTask().execute();
+                    if (!isRunning) new asynTask().execute();
                 }
             }
         };
@@ -158,6 +158,8 @@ public class GetLastLocation extends Service {
 
         @Override
         protected Void doInBackground(String... strings) {
+            if (isRunning) return null;
+            isRunning=true;
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("firmCode", PersonelData.FirmCode);
             Request.addProperty("userCode", PersonelData.CitizenNumber);
@@ -214,6 +216,7 @@ public class GetLastLocation extends Service {
                     }
                 }
             }
+            isRunning=false;
         }
     }
 

@@ -11,7 +11,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String METHOD_NAME = "Login";
     String SOAP_ACTION = NAMESPACE + METHOD_NAME;// "http://www.yasinkaratas.com.tr/HelloWorld";
     String resultText = "";
+    boolean isRunning = false;
 
     EditText etCitizenshipNumber;
     EditText etFirmCode;
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvForgetPassword.setOnClickListener(this);
     }
 
-    public void applyPermission()
-    {
+    public void hasPermissions() {
+        // Dynamically apply for required permissions if the API level is 28 or smaller.
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ActivityCompat.requestPermissions(this, strings, 1);
             }
         } else {
+            // Dynamically apply for required permissions if the API level is greater than 28. The android.permission.ACCESS_BACKGROUND_LOCATION permission is required.
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ActivityCompat.checkSelfPermission(this,
@@ -80,54 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    boolean CheckPermissions() {
-        // Dynamically apply for required permissions if the API level is 28 or smaller.
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                String[] strings =
-                        {
-                                Manifest.permission.ACCESS_WIFI_STATE,
-                                Manifest.permission.ACCESS_NETWORK_STATE,
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
-                        };
-                ActivityCompat.requestPermissions(this, strings, 1);
-            }
-            return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
-        } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, "android.permission.ACCESS_BACKGROUND_LOCATION") != PackageManager.PERMISSION_GRANTED) {
-                String[] strings = {
-                        Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        "android.permission.ACCESS_BACKGROUND_LOCATION"
-                };
-                ActivityCompat.requestPermissions(this, strings, 2);
-            }
-            return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, "android.permission.ACCESS_BACKGROUND_LOCATION") == PackageManager.PERMISSION_GRANTED);
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        hasPermissions();
+
         etPassword.requestFocus();
     }
 
@@ -161,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 METHOD_NAME = "Login";
                 SOAP_ACTION = NAMESPACE + METHOD_NAME;
-                new asynTask().execute();
+                if (!isRunning) new asynTask().execute();
                 break;
             }
             case R.id.tvForgetPassword: {
@@ -185,12 +146,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private class asynTask extends AsyncTask<String, Void, Void> {
+
         ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog alert;
 
         @Override
         protected void onPreExecute() {
+            if (isRunning) return;
             progressDialog.setMessage(getString(R.string.pleaseWait));
             progressDialog.show();
         }
@@ -201,25 +164,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected Void doInBackground(String... strings) {
-
+            if (isRunning) return null;
+            isRunning = true;
 /*
             String NAMESPACE = "http://tckimlik.nvi.gov.tr/WS";
             String URL = "https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx";
             String SOAP_ACTION = "http://tckimlik.nvi.gov.tr/WS/TCKimlikNoDogrula";
             String METHOD_NAME = "TCKimlikNoDogrula";
 */
-
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("firmCode", etFirmCode.getText().toString());
             Request.addProperty("userCode", etCitizenshipNumber.getText().toString());
             Request.addProperty("password", tools.MD5Generator("+-*" + etPassword.getText().toString() + "*-+").toString());
+
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
             envelope.implicitTypes = true;
             envelope.setOutputSoapObject(Request);
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
-
             try {
+                HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
                 androidHttpTransport.call(SOAP_ACTION, envelope);
                 response = (SoapObject) envelope.bodyIn;
                 rd = response.getProperty(0).toString().replaceAll("string=", "").split(";");
@@ -270,29 +233,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         GetLastLocation.PersonelData.FirmCity = rd[6].trim();
                         GetLastLocation.PersonelData.isAdmin = rd[7].trim().equals("1");
 
-                        if (!CheckPermissions()) {
-                            alert = builder.setMessage(R.string.permissionErrorMessage)
-                                    .setTitle(R.string.error)
-                                    .setCancelable(true)
-                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            //CheckPermissions();
-                                            applyPermission();
-                                        }
-                                    }).create();
-                            alert.show();
-                            return;
-                        }
+                        //if (!CheckPermissions()) {
+//                        if (!hasPermissions()) {
+//                            alert = builder.setMessage(R.string.permissionErrorMessage)
+//                                    .setTitle(R.string.error)
+//                                    .setCancelable(true)
+//                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                            //ActivityCompat.requestPermissions(this, tools.PERMISSIONS, 1);
+//                                        }
+//                                    }).create();
+//                            alert.show();
+//                            isRunning = false;
+//                            return;
+//                        }
                         if (!isGpsEnabled()) {
-                            alert = builder.setMessage("Lütfen GPS ayarınızı açın.")
+                            alert = builder.setMessage(R.string.turnOnGPS)
                                     .setTitle(R.string.information)
                                     .setCancelable(true)
                                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                                         }
                                     }).create();
                             alert.show();
+                            isRunning = false;
                             return;
                         }
                         Intent intent = new Intent(MainActivity.this, Following.class);
@@ -326,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                     public void onClick(DialogInterface dialog, int id) {
                                                         METHOD_NAME = "SetPassword";
                                                         SOAP_ACTION = NAMESPACE + METHOD_NAME;
-                                                        new asynTask().execute();
+                                                        if (!isRunning) new asynTask().execute();
                                                     }
                                                 })
                                                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -353,8 +318,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }).create();
                 alert.show();
-
             }
+            isRunning = false;
         }
     }
 

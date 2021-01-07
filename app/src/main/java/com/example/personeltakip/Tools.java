@@ -1,15 +1,21 @@
 package com.example.personeltakip;
 
-import android.location.Location;
-
-import com.huawei.hms.location.LocationResult;
+import android.Manifest;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Tools {
-    public Boolean isLoggedIn;
+    public boolean isLoggedIn;
+    String[] PERMISSIONS = {
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+    };
 
     public boolean TCConfirm(String kimlikNo) {
         if (kimlikNo.length() != 11) return false;
@@ -22,7 +28,7 @@ public class Tools {
         }
         toplam -= hane[10];
         if ((toplam % 10) != hane[10]) return false;
-        if (((hane[0] + hane[2] + hane[4] + hane[6] + hane[8]) * 7 + (hane[1] + hane[3] + hane[5] + hane[7]) * 9) % 10 != hane[9])
+        if (((hane[0] + hane[2] + hane[4] + hane[6] + hane[8]) * 7 + (hane[1] + hane[3] + hane[5] + hane[7]) * 9 % 10 != hane[9]))
             return false;
         if (((hane[0] + hane[2] + hane[4] + hane[6] + hane[8]) * 8) % 10 != hane[10]) return false;
         return true;
@@ -58,7 +64,5 @@ public class Tools {
             return _result;
         }
     }
-
-
 }
 
