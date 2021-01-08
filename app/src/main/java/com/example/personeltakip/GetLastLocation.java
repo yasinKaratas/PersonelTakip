@@ -55,18 +55,14 @@ public class GetLastLocation extends Service {
         public static String DateTime = "";
     }
 
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private LocationRequest mLocationRequest;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        mLocationRequest = new LocationRequest();
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(delay);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(1f);
-
+        mLocationRequest.setSmallestDisplacement(3f);
 
         LocationCallback mLocationCallback;
         mLocationCallback = new LocationCallback() {

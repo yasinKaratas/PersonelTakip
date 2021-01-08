@@ -30,7 +30,7 @@ import java.util.List;
 
 public class Following extends AppCompatActivity implements OnMapReadyCallback {
 
-    // Web Service parametreleri
+    // Web Service parameters
     final String NAMESPACE = "http://www.yasinkaratas.com.tr/";
     final String URL = "http://www.yasinkaratas.com.tr/WebServices/PersonelTakip.asmx";
     String METHOD_NAME = "GetLocations";
