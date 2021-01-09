@@ -40,7 +40,8 @@
             android:textAlignment="center"
             android:textSize="16sp" />
 
-        <com.huawei.hms.maps.MapView
+        <com.huawei.hms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="450dp"
@@ -48,6 +49,10 @@
             map:cameraTargetLng="29.26"
             map:cameraZoom="7"
             map:mapType="normal"
-            map:uiZoomControls="true" />
+            map:uiCompass="true"
+            map:uiRotateGestures="true"
+            map:uiTiltGestures="true"
+            map:uiZoomControls="true"
+            map:uiZoomGestures="true" />
     </LinearLayout>
 </ScrollView>

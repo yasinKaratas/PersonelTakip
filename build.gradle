@@ -1,13 +1,12 @@
 buildscript {
     repositories {
+        maven { url "https://developer.huawei.com/repo/" }
         google()
         jcenter()
-        maven { url 'https://developer.huawei.com/repo/' }
-        maven { url 'http://ksoap2-android.googlecode.com/svn/m2-repo' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
-        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+        classpath "com.huawei.agconnect:agcp:1.4.2.300"
     }
 }
 
@@ -16,7 +15,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url 'https://developer.huawei.com/repo/'
+            url "https://developer.huawei.com/repo/"
         }
     }
 }

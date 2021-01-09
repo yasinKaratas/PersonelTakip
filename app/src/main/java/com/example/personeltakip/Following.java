@@ -1,5 +1,6 @@
 package com.example.personeltakip;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -9,7 +10,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.huawei.hms.maps.CameraUpdateFactory;
@@ -52,6 +55,7 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
     TextView tvFirmCity;
     TextView tvCitizenNumber;
     TextView tvNameSurname;
+    MapView mMapView;
     Tools tools;
 
 
@@ -65,12 +69,15 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         tools = new Tools();
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
-        MapView mMapView = findViewById(R.id.mapView);
+        init();
+
+        mMapView = findViewById(R.id.mapView);
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -78,8 +85,6 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         MapsInitializer.setApiKey("CgB6e3x9Iw723tzF8QD9fwWo5XUkLjhgA4HXJcDquOdwHo025PBgikBFgdPx8EiAgiqix1XHyHEW/gzh7uOt83PS");
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
-
-        init();
 
         //tvFirmCode.setText(Tools.PersonelData.FirmCode);
         tvFirmCity.setText("(" + GetLastLocation.PersonelData.FirmCity + ")");
@@ -89,6 +94,53 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         GetLastLocation.context = this;
         startForegroundService(new Intent(this, GetLastLocation.class));
         startTime();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mMapView.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mMapView.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    protected void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+        mMapView.onSaveInstanceState(mapViewBundle);
     }
 
     public void addMarker(double lat, double lng, String title, String snip) {
@@ -101,14 +153,6 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         hMap.addMarker(options).showInfoWindow();
     }
 
-    @Override
-    public void onMapReady(HuaweiMap huaweiMap) {
-        hMap = huaweiMap;
-        hMap.setMyLocationEnabled(true);
-        hMap.getUiSettings().setMyLocationButtonEnabled(true);
-        isMapReady = true;
-    }
-
     //private Handler mHandler = new Handler();
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -117,18 +161,13 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         mHandler.postDelayed(mUpdateTimeTask, GetLastLocation.delay);
     }
 
-    /*
-    handler.post(new Runnable() {
-            public void run() {
-                // your UI code goes here
-            }
-        });
-    */
+
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
+            mHandler.postDelayed(mUpdateTimeTask, GetLastLocation.delay);
             if (!isMapReady) return;
-            ;
-            mHandler.postDelayed(this, GetLastLocation.delay);
+
+//            mHandler.postDelayed(this, GetLastLocation.delay);
 //            if ((oldLatitude == GetLastLocation.CurrentPosition.Latitude) && (oldLongitude == GetLastLocation.CurrentPosition.Longitude)) {
 //                return;
 //            }
@@ -160,6 +199,14 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
         }
     };
 
+    @RequiresPermission(allOf = {"ACCESS_FINE_LOCATION", "ACCESS_WIFI_STATE"})
+    @Override
+    public void onMapReady(HuaweiMap map) {
+        hMap = map;
+        hMap.setMyLocationEnabled(true);// Enable the my-location overlay.
+        hMap.getUiSettings().setMyLocationButtonEnabled(true);// Enable the my-location icon.
+        isMapReady = true;
+    }
 
     private class asynTask extends AsyncTask<String, Void, Void> {
         @Override
@@ -241,6 +288,4 @@ public class Following extends AppCompatActivity implements OnMapReadyCallback {
             isRunning = false;
         }
     }
-
-
 }

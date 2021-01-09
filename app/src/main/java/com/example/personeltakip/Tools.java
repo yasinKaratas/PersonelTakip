@@ -14,7 +14,8 @@ public class Tools {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            "com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA"
     };
 
     public boolean TCConfirm(String kimlikNo) {

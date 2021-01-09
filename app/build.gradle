@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id "com.android.application"
 }
 android {
     compileSdkVersion 30
@@ -16,7 +16,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     compileOptions {
@@ -26,12 +26,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.huawei.hms:maps:5.0.5.301'
-    implementation 'com.huawei.agconnect:agconnect-core:1.4.0.300'
-    implementation 'com.huawei.hms:location:5.0.4.300'
-    implementation files('libs\\ksoap2-android-assembly-3.6.4-jar-with-dependencies.jar')
+    implementation "com.huawei.hms:maps:5.1.0.300"
+    implementation "com.huawei.hms:location:5.1.0.300"
+    implementation "com.google.android.material:material:1.2.1"
+    implementation files("libs/ksoap2-android-assembly-3.6.4-jar-with-dependencies.jar")
 
 }
 
-apply plugin: 'com.huawei.agconnect'
+apply plugin: "com.huawei.agconnect"
